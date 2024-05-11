@@ -3,7 +3,6 @@ package com.product.improv.com.product.improv.entity;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-
 @Document("product_improv_users")
 public class User {
     private String id;
