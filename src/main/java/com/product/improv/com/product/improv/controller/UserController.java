@@ -1,5 +1,6 @@
 package com.product.improv.com.product.improv.controller;
 
+import com.product.improv.com.product.improv.dto.LoginForm;
 import com.product.improv.com.product.improv.entity.User;
 import com.product.improv.com.product.improv.repository.UserRepository;
 import com.product.improv.com.product.improv.service.UserService;
@@ -20,13 +21,23 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<String> createUser(@RequestBody User user) {
         try {
             userService.saveUser(user);
             return ResponseEntity.status(HttpStatus.CREATED).body("User details saved successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save user: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginForm loginForm) {
+        try {
+            userService.login(loginForm);
+            return ResponseEntity.status(HttpStatus.CREATED).body("User logged in successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to login user: " + e.getMessage());
         }
     }
 }
