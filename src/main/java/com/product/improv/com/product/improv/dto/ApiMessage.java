@@ -1,14 +1,14 @@
 package com.product.improv.com.product.improv.dto;
 
-public class LoginMessage {
+public class ApiMessage {
     private String message;
     private boolean success;
 
     // Constructors
-    public LoginMessage() {
+    public ApiMessage() {
     }
 
-    public LoginMessage(String message, boolean success) {
+    public ApiMessage(String message, boolean success) {
         this.message = message;
         this.success = success;
     }

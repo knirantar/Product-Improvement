@@ -1,14 +1,12 @@
 package com.product.improv.com.product.improv.service;
 
 import com.product.improv.com.product.improv.dto.LoginForm;
-import com.product.improv.com.product.improv.dto.LoginMessage;
+import com.product.improv.com.product.improv.dto.ApiMessage;
 import com.product.improv.com.product.improv.entity.User;
 import com.product.improv.com.product.improv.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -33,24 +31,46 @@ public class UserService {
         }
     }
 
-    public LoginMessage login(LoginForm loginForm) {
+    public ApiMessage login(LoginForm loginForm) {
         User user = userRepository.findByUsername(loginForm.getUsername());
-        LoginMessage loginMessage = new LoginMessage();
+        ApiMessage apiMessage = new ApiMessage();
         if (user != null) {
             String encodedPassword = user.getPassword();
             boolean isPasswordRight = passwordEncoder.matches(loginForm.getPassword(), encodedPassword);
             if (isPasswordRight) {
-                loginMessage.setMessage("User is logged in successfully");
-                loginMessage.setSuccess(true);
+                apiMessage.setMessage("User is logged in successfully");
+                apiMessage.setSuccess(true);
             }
             else {
-                loginMessage.setMessage("Password is incorrect");
-                loginMessage.setSuccess(false);
+                apiMessage.setMessage("Password is incorrect");
+                apiMessage.setSuccess(false);
             }
         } else {
-            loginMessage.setMessage("User does not exist");
-            loginMessage.setSuccess(false);
+            apiMessage.setMessage("User does not exist");
+            apiMessage.setSuccess(false);
         }
-        return loginMessage;
+        return apiMessage;
+    }
+
+    public ApiMessage update(User user) {
+        User savedUser = userRepository.findByUsername(user.getUsername());
+        ApiMessage apiMessage = new ApiMessage();
+        if(savedUser != null) {
+            if (user.getUsername() != null) {
+                savedUser.setUsername(user.getUsername());
+            }
+            if (user.getEmail() != null) {
+                savedUser.setEmail(user.getEmail());
+            }
+        } else {
+            apiMessage.setMessage("User you are updating does not exist");
+            apiMessage.setSuccess(false);
+        }
+        return apiMessage;
+    }
+
+    public User getUserDetails(String username) {
+        User savedUser = userRepository.findByUsername(username);
+        return savedUser;
     }
 }
