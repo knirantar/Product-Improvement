@@ -1,6 +1,7 @@
 package com.product.improv.com.product.improv.controller;
 
 import com.product.improv.com.product.improv.dto.LoginForm;
+import com.product.improv.com.product.improv.dto.LoginMessage;
 import com.product.improv.com.product.improv.entity.User;
 import com.product.improv.com.product.improv.repository.UserRepository;
 import com.product.improv.com.product.improv.service.UserService;
@@ -34,8 +35,8 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginForm loginForm) {
         try {
-            userService.login(loginForm);
-            return ResponseEntity.status(HttpStatus.CREATED).body("User logged in successfully");
+            LoginMessage loginMessage = userService.login(loginForm);
+            return ResponseEntity.status(HttpStatus.CREATED).body(loginMessage.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to login user: " + e.getMessage());
         }
