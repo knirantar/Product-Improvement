@@ -1,7 +1,10 @@
 package com.product.improv.com.product.improv.entity;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.time.LocalDateTime;
 
+@Document("reviews")
 public class Review {
 
     private String userId;

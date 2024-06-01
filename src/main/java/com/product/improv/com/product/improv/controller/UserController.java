@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/users")
 public class UserController {
@@ -68,4 +70,17 @@ public class UserController {
     }
 
     //TODO - API to fetch all users data
+    @GetMapping("/all")
+    public ResponseEntity<?> getUserList() {
+
+        List<User> users = userService.getAllUserDetails();
+        if (users != null) {
+            // Return user details if found
+            return ResponseEntity.ok().body(users);
+        } else {
+            // Return not found error response
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Users not found");
+        }
+    }
+
 }

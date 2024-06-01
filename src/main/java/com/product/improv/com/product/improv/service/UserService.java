@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class UserService {
+public class  UserService {
 
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
@@ -72,5 +74,10 @@ public class UserService {
     public User getUserDetails(String username) {
         User savedUser = userRepository.findByUsername(username);
         return savedUser;
+    }
+
+    public List<User> getAllUserDetails() {
+        List<User> users = userRepository.findAll();
+        return users;
     }
 }

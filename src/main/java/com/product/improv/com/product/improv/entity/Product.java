@@ -1,6 +1,8 @@
 package com.product.improv.com.product.improv.entity;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -10,7 +12,7 @@ import java.util.List;
 public class Product {
 
     @Id
-    private String id;
+    private ObjectId id;
 
     private String name;
     private String type;
@@ -18,12 +20,15 @@ public class Product {
     private String brand;
     private List<String> features;
     private Double rating;
+    //Below DBRef will not store particular document of reviews
+    // with the given products just the reference of it
+    @DBRef
     private List<Review> reviews;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private List<String> tags;
 
-    public Product(String id, String name, String type, String description, String brand, List<String> features, Double rating, List<Review> reviews, LocalDateTime createdAt, LocalDateTime updatedAt, List<String> tags) {
+    public Product(ObjectId id, String name, String type, String description, String brand, List<String> features, Double rating, List<Review> reviews, LocalDateTime createdAt, LocalDateTime updatedAt, List<String> tags) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -40,11 +45,11 @@ public class Product {
     public Product() {
     }
 
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 

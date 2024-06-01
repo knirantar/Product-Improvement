@@ -1,6 +1,8 @@
 package com.product.improv.com.product.improv.entity;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -8,7 +10,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 @Document("product_improv_users")
 public class User {
-    private String id;
+    @Id
+    private ObjectId id;
 
     @Indexed(unique = true)
     private String username;
@@ -27,7 +30,7 @@ public class User {
         this.createdAt = null; // Explicitly set createdAt to null
     }
 
-    public User(String id, String username, String email, String password, LocalDateTime createdAt, LocalDateTime updatedAt, boolean isActive, boolean isDeleted) {
+    public User(ObjectId id, String username, String email, String password, LocalDateTime createdAt, LocalDateTime updatedAt, boolean isActive, boolean isDeleted) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -38,11 +41,11 @@ public class User {
         this.isDeleted = isDeleted;
     }
 
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 
