@@ -1,7 +1,10 @@
 package com.product.improv.com.product.improv.entity;
 
+import com.mongodb.lang.NonNull;
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,17 +17,22 @@ public class Product {
     @Id
     private ObjectId id;
 
+    @NonNull
     private String name;
+    @NonNull
     private String type;
     private String description;
     private String brand;
     private List<String> features;
+    @NonNull
     private Double rating;
     //Below DBRef will not store particular document of reviews
     // with the given products just the reference of it
     @DBRef
     private List<Review> reviews;
+    @CreatedDate
     private LocalDateTime createdAt;
+    @LastModifiedDate
     private LocalDateTime updatedAt;
     private List<String> tags;
 

@@ -31,7 +31,7 @@ public class User {
     }
 
     public User(ObjectId id, String username, String email, String password, LocalDateTime createdAt, LocalDateTime updatedAt, boolean isActive, boolean isDeleted) {
-        this.id = id;
+        this.id = id != null ? id : new ObjectId();
         this.username = username;
         this.email = email;
         this.password = password;

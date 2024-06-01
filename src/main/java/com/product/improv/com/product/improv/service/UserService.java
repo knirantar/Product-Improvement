@@ -38,7 +38,10 @@ public class  UserService {
         ApiMessage apiMessage = new ApiMessage();
         if (user != null) {
             String encodedPassword = user.getPassword();
+            System.out.println("Entered password "+ loginForm.getPassword());
+            System.out.println("Entered password "+ user.getPassword());
             boolean isPasswordRight = passwordEncoder.matches(loginForm.getPassword(), encodedPassword);
+            System.out.println(isPasswordRight);
             if (isPasswordRight) {
                 apiMessage.setMessage("User is logged in successfully");
                 apiMessage.setSuccess(true);
@@ -54,8 +57,11 @@ public class  UserService {
         return apiMessage;
     }
 
-    public ApiMessage update(User user) {
-        User savedUser = userRepository.findByUsername(user.getUsername());
+    public ApiMessage update(User user, String username) {
+        System.out.println(user.getUsername());
+        User savedUser = userRepository.findByUsername(username);
+        System.out.println(savedUser);
+
         ApiMessage apiMessage = new ApiMessage();
         if(savedUser != null) {
             if (user.getUsername() != null) {
@@ -64,6 +70,10 @@ public class  UserService {
             if (user.getEmail() != null) {
                 savedUser.setEmail(user.getEmail());
             }
+            if(user.getPassword() != null) {
+                savedUser.setPassword(this.passwordEncoder.encode(user.getPassword()));
+            }
+            userRepository.save(savedUser);
         } else {
             apiMessage.setMessage("User you are updating does not exist");
             apiMessage.setSuccess(false);
@@ -77,7 +87,6 @@ public class  UserService {
     }
 
     public List<User> getAllUserDetails() {
-        List<User> users = userRepository.findAll();
-        return users;
+        return userRepository.findAll();
     }
 }

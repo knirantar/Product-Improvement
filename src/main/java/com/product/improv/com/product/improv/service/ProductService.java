@@ -15,12 +15,14 @@ public class ProductService {
     ProductRepository productRepository;
 
     public List<Product> getAllProducts() {
-        List<Product> products = productRepository.findAll();
-        return products;
+        return productRepository.findAll();
     }
 
     public Product getProductByName(String name) {
-        Product product = productRepository.findByNname(name);
-        return product;
+        return productRepository.findByName(name);
+    }
+
+    public void saveProduct(Product product) {
+        productRepository.save(product);
     }
 }

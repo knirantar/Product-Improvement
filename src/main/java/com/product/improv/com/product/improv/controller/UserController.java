@@ -49,7 +49,7 @@ public class UserController {
     @PutMapping("/update/{username}")
     public ResponseEntity<String> updateUser(@PathVariable("username") String username, @RequestBody User user) {
         try {
-            userService.update(user);
+            userService.update(user, username);
             return ResponseEntity.status(HttpStatus.CREATED).body("User details updated successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to login user: " + e.getMessage());
